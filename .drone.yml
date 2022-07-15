@@ -5,7 +5,12 @@ name: default
 steps:
   - name: Install PHP Packages
     image: webpress/php:7.4-alpine
+    environment:
+      COMPOSER_AUTH:
+        from_secret: COMPOSER_AUTH
     commands:
+      - mkdir ~/.composer
+      - echo $COMPOSER_AUTH > ~/.composer/auth.json
       - composer install
 
   - name: Build assets
